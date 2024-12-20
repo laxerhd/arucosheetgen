@@ -9,3 +9,9 @@ https://raw.githubusercontent.com/opencv/opencv_contrib/master/modules/aruco/src
 
 Learn more about ArUco markers here:
 https://docs.opencv.org/4.1.0/d5/dae/tutorial_aruco_detection.html
+
+Online version
+====
+
+By the power of GitHub Pages you can always find the current version here:
+https://fodi.github.io/arucosheetgen/
