@@ -60,6 +60,7 @@ $(function () {
     var markerIdInputFirst = $('.setup input[name=id1]');
     var markerIdInputLast = $('.setup input[name=id2]');
     var sizeInput = $('.setup input[name=size]');
+    var labelsInput = $('.setup textarea[name=labels]');
 
     function updateMarkers() {
         var markerIdFirst = Number(markerIdInputFirst.val());
@@ -68,11 +69,13 @@ $(function () {
         var dictName = dictSelect.val();
         var width = Number(dictSelect.find('option:selected').attr('data-width'));
         var height = Number(dictSelect.find('option:selected').attr('data-height'));
+        var labels = labelsInput.val().split('\n');
 
         // Wait until dict data is loaded
         loadDict.then(function () {
             $('#cards').html('');
 
+            labelCounter = 0;
             for (let markerId = markerIdFirst; markerId <= markerIdLast; markerId++) {
                 // Generate marker                
                 let svg = generateArucoMarker(width, height, dictName, markerId, size);
@@ -81,7 +84,8 @@ $(function () {
                     height: size + 'mm'
                 });
                 let marker = $('<div class="card"/>').html((svg[0].outerHTML));
-                marker.append('<div class="card-text">' + markerId + '</div>');
+                let label = labels[labelCounter++];
+                marker.append('<div class="card-text">' + (label ? label : '[' + markerId + ']') + '</div>');
                 $('#cards').append(marker);
             }
 
@@ -91,5 +95,5 @@ $(function () {
     updateMarkers();
 
     dictSelect.change(updateMarkers);
-    $('.setup input').on('input', updateMarkers);
+    $('.setup input, .setup textarea').on('input', updateMarkers);
 });
