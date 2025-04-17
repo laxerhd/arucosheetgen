@@ -20,7 +20,6 @@ a {
 .setup {
     margin: 0 10px;
 }
-
 .setup input {
     font-weight: 300;
     margin: 0;
@@ -70,27 +69,37 @@ a {
 #cards {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     align-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
 }
 
 .card {
-    text-align: left;
     background: white;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
     border: 1px dashed #ccc;
-    width: 33.1%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    page-break-inside: avoid;
 }
 
-.card > svg {
-    min-width: 20mm;
-    min-height: 20mm;
-    margin: 5mm;
+.marker-svg-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 5mm;
+  margin-bottom: 5mm;
+  width: 100%;
+}
+
+.marker-svg-group > svg {
+    flex-shrink: 0;
 }
 
 .card .card-text {

@@ -60,12 +60,14 @@ $(function () {
     var markerIdInputFirst = $('.setup input[name=id1]');
     var markerIdInputLast = $('.setup input[name=id2]');
     var sizeInput = $('.setup input[name=size]');
+    var copiesInput = $('.setup input[name=copies]');
     var labelsInput = $('.setup textarea[name=labels]');
 
     function updateMarkers() {
         var markerIdFirst = Number(markerIdInputFirst.val());
         var markerIdLast = Number(markerIdInputLast.val());
         var size = Number(sizeInput.val());
+        var numCopies = Number(copiesInput.val());
         var dictName = dictSelect.val();
         var width = Number(dictSelect.find('option:selected').attr('data-width'));
         var height = Number(dictSelect.find('option:selected').attr('data-height'));
@@ -74,22 +76,26 @@ $(function () {
         // Wait until dict data is loaded
         loadDict.then(function () {
             $('#cards').html('');
-
-            labelCounter = 0;
+            var labelCounter = 0;
             for (let markerId = markerIdFirst; markerId <= markerIdLast; markerId++) {
-                // Generate marker                
-                let svg = generateArucoMarker(width, height, dictName, markerId, size);
+                let svg = generateArucoMarker(width, height, dictName, markerId);
                 svg.attr({
                     width: size + 'mm',
                     height: size + 'mm'
                 });
-                let marker = $('<div class="card"/>').html((svg[0].outerHTML));
-                let label = labels[labelCounter++];
-                marker.append('<div class="card-text">' + (label ? label : '[' + markerId + ']') + '</div>');
-                $('#cards').append(marker);
+                let svgHtml = svg[0].outerHTML;
+                let markerCard = $('<div class="card"/>');
+                let svgContainer = $('<div class="marker-svg-group"/>');
+                for (let copy = 0; copy < numCopies; copy++) {
+                    svgContainer.append(svgHtml);
+                }
+                markerCard.append(svgContainer);
+                let labelText = labels[labelCounter] ? labels[labelCounter] : '[' + markerId + ']';
+                markerCard.append('<div class="card-text">' + labelText + '</div>');
+                $('#cards').append(markerCard);
+                labelCounter++;
             }
-
-        })
+        });
     }
 
     updateMarkers();
