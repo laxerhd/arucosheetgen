@@ -47,6 +47,11 @@ a {
     margin: 10px 0;
 }
 
+.setup input[type="checkbox"] {
+    width: auto;
+    vertical-align: middle;
+}
+
 .setup label {
     vertical-align: middle;
     font-size: 15px;

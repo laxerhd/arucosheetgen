@@ -62,6 +62,7 @@ $(function () {
     var sizeInput = $('.setup input[name=size]');
     var copiesInput = $('.setup input[name=copies]');
     var labelsInput = $('.setup textarea[name=labels]');
+    var showLabelsCheckbox = $('.setup input[name=showLabels]');
 
     function updateMarkers() {
         var markerIdFirst = Number(markerIdInputFirst.val());
@@ -72,6 +73,7 @@ $(function () {
         var width = Number(dictSelect.find('option:selected').attr('data-width'));
         var height = Number(dictSelect.find('option:selected').attr('data-height'));
         var labels = labelsInput.val().split('\n');
+        var showLabels = showLabelsCheckbox.is(':checked');
 
         // Wait until dict data is loaded
         loadDict.then(function () {
@@ -90,8 +92,11 @@ $(function () {
                     svgContainer.append(svgHtml);
                 }
                 markerCard.append(svgContainer);
-                let labelText = labels[labelCounter] ? labels[labelCounter] : '[' + markerId + ']';
-                markerCard.append('<div class="card-text">' + labelText + '</div>');
+                // Only show labels if box is checked
+                if (showLabels) {
+                    let labelText = labels[labelCounter] ? labels[labelCounter] : '[' + markerId + ']';
+                    markerCard.append('<div class="card-text">' + labelText + '</div>');
+                }
                 $('#cards').append(markerCard);
                 labelCounter++;
             }
